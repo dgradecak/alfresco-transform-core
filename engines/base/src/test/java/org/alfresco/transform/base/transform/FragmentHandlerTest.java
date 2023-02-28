@@ -163,7 +163,6 @@ public class FragmentHandlerTest
                 .getResolvedException()
                 .getMessage();
         assertTrue(StringUtils.contains(errorMessage,expectedError));
-        System.out.println("\n \n \n \n \n \n  THIS ONE IS IMPORTANT \n \n \n \n \n \n ");
     }
 
     @Test

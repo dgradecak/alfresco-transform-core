@@ -57,6 +57,7 @@ public class FakeTransformEngineWithFragments  extends AbstractFakeTransformEngi
 
     @Override public ProbeTransform getProbeTransform()
     {
+        System.out.println("ProbeTransform trigger moment");
         return new ProbeTransform("probe.pdf", MIMETYPE_PDF, MIMETYPE_IMAGE_JPEG, Collections.emptyMap(),
             60, 16, 400, 10240, 60 * 30 + 1, 60 * 15 + 20);
     }
