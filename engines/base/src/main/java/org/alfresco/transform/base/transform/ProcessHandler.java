@@ -192,6 +192,7 @@ abstract class ProcessHandler extends FragmentHandler
     {
         final String transformerName = transformRegistry.findTransformerName(sourceMimetype,
             sourceSizeInBytes, targetMimetype, transformOptions, null);
+        System.out.println("\n \n \n \n \n \n transformerName variables: --- " + sourceMimetype + ", " + sourceSizeInBytes + ", " + targetMimetype + ", " + transformOptions);
         if (transformerName == null)
         {
             throw new TransformException(BAD_REQUEST, "No transforms for: "+
