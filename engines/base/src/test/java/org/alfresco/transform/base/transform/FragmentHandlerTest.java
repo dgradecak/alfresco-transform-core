@@ -152,6 +152,7 @@ public class FragmentHandlerTest
     public void testErrorIfHttp() throws Exception
     {
         String expectedError = "Fragments may only be sent via message queues. This an http request";
+        System.out.println("\n \n \n \n \n \n  THIS ONE IS IMPORTANT \n \n \n \n \n \n ");
         String errorMessage = mockMvc.perform(
             MockMvcRequestBuilders.multipart(ENDPOINT_TRANSFORM)
                 .file(new MockMultipartFile("file", null, MIMETYPE_TEXT_PLAIN,

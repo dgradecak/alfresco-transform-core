@@ -224,6 +224,7 @@ public class TransformManagerImpl implements TransformManager
     @Override
     public OutputStream respondWithFragment(Integer index, boolean finished) throws IOException
     {
+        System.out.println("\n \n \n \n \n \n "+ request + "\n \n \n \n \n \n ");
         if (request != null)
         {
             throw new IllegalStateException("Fragments may only be sent via message queues. This an http request");
