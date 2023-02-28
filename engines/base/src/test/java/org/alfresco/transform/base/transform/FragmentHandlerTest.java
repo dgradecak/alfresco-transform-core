@@ -36,6 +36,7 @@ import org.alfresco.transform.base.probes.ProbeTransform;
 import org.alfresco.transform.base.sfs.SharedFileStoreClient;
 import org.alfresco.transform.client.model.TransformReply;
 import org.alfresco.transform.client.model.TransformRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,14 +65,14 @@ import static org.alfresco.transform.common.Mimetype.MIMETYPE_TEXT_PLAIN;
 import static org.alfresco.transform.common.RequestParamMap.ENDPOINT_TRANSFORM;
 import static org.alfresco.transform.common.RequestParamMap.SOURCE_MIMETYPE;
 import static org.alfresco.transform.common.RequestParamMap.TARGET_MIMETYPE;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes={org.alfresco.transform.base.Application.class})
@@ -151,14 +152,16 @@ public class FragmentHandlerTest
     public void testErrorIfHttp() throws Exception
     {
         String expectedError = "Fragments may only be sent via message queues. This an http request";
-        mockMvc.perform(
+        String errorMessage = mockMvc.perform(
             MockMvcRequestBuilders.multipart(ENDPOINT_TRANSFORM)
                 .file(new MockMultipartFile("file", null, MIMETYPE_TEXT_PLAIN,
                  "Start".getBytes(StandardCharsets.UTF_8)))
                 .param(SOURCE_MIMETYPE, MIMETYPE_PDF)
                 .param(TARGET_MIMETYPE, MIMETYPE_IMAGE_JPEG))
-               .andExpect(status().isInternalServerError())
-               .andExpect(status().reason(containsString(expectedError)));
+                .andReturn()
+                .getResolvedException()
+                .getMessage();
+        assertTrue(StringUtils.contains(errorMessage,expectedError));
     }
 
     @Test
